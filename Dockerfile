@@ -39,6 +39,10 @@ WORKDIR /app
 # Copy built application
 COPY --from=build /app ./
 
+# Create uploads directory and set permissions
+RUN mkdir -p /app/public/uploads && \
+    chmod 777 /app/public/uploads
+
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 
