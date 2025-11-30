@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Strapi
+.tmp/
+.cache/
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*. local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database (local SQLite)
+*. db
+
+# License
+license. txt

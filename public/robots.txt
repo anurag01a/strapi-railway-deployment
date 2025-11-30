@@ -1,0 +1,4 @@
+# robots. txt for Strapi
+User-agent: *
+Disallow: /admin/
+Allow: /
