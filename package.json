@@ -1,7 +1,7 @@
 {
   "name": "strapi-cms-railway",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0. 0",
   "description": "Strapi CMS deployed on Railway",
   "scripts": {
     "develop": "strapi develop",
@@ -10,14 +10,14 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/strapi": "4.25.0",
-    "@strapi/plugin-users-permissions": "4.25.0",
-    "@strapi/plugin-i18n": "4.25. 0",
-    "pg": "8.11.3",
-    "pg-connection-string": "2.6.2"
+    "@strapi/strapi": "^4.15.0",
+    "@strapi/plugin-users-permissions": "^4.15.0",
+    "@strapi/plugin-i18n": "^4.15.0",
+    "pg": "^8.11.3",
+    "pg-connection-string": "^2.6.2"
   },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
+    "node": ">=18.0.0",
     "npm": ">=6.0.0"
   },
   "license": "MIT"
