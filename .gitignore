@@ -10,7 +10,7 @@ dist/
 # Environment
 .env
 .env.local
-.env.*. local
+.env.*.local
 
 # Logs
 *.log
@@ -23,11 +23,16 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# Database (local SQLite)
-*. db
+# Database
+*.db
 
-# License
-license. txt
+# Terraform
+terraform/. terraform/
+terraform/. terraform.lock.hcl
+terraform/*. tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+! terraform/*. tfvars.example
+terraform/tfplan
+terraform/*. pem

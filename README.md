@@ -1,78 +1,184 @@
-# Strapi CMS on Railway
+# Strapi CMS - Cloud Deployment with Infrastructure as Code
 
-A headless CMS deployed on Railway with PostgreSQL database.
+A headless CMS deployed on the cloud using Infrastructure as Code principles.
 
-## Live Demo
+## 🌐 Live Demo
 
-🔗 **API URL**: [Your Railway URL here]
-🔗 **Admin Panel**: [Your Railway URL]/admin
+| Resource          | URL                                |
+| ----------------- | ---------------------------------- |
+| **Strapi Server** | https://your-url. railway.app      |
+| **Admin Panel**   | https://your-url.railway.app/admin |
+| **Database**      | PostgreSQL (Railway)               |
 
-## Tech Stack
+## 🏗️ Architecture
 
-- **CMS**: Strapi v4
-- **Database**: PostgreSQL (Railway)
-- **Hosting**: Railway
-- **IaC**: Terraform (for AWS reference)
+### Production Architecture (AWS - Terraform)
 
-## Local Development
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                          AWS Cloud                               │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │                     VPC (10.0.0.0/16)                      │  │
+│  │                                                            │  │
+│  │  ┌─────────────────────┐    ┌─────────────────────┐       │  │
+│  │  │   Public Subnet 1    │    │   Public Subnet 2    │       │  │
+│  │  │                      │    │                      │       │  │
+│  │  │  ┌────────────────┐  │    │                      │       │  │
+│  │  │  │      ALB       │  │    │                      │       │  │
+│  │  │  └───────┬────────┘  │    │                      │       │  │
+│  │  │          │           │    │                      │       │  │
+│  │  │  ┌───────┴────────┐  │    │                      │       │  │
+│  │  │  │  NAT Gateway   │  │    │                      │       │  │
+│  │  │  └────────────────┘  │    │                      │       │  │
+│  │  └─────────────────────┘    └─────────────────────┘       │  │
+│  │                                                            │  │
+│  │  ┌─────────────────────┐    ┌─────────────────────┐       │  │
+│  │  │  Private Subnet 1   │    │  Private Subnet 2   │       │  │
+│  │  │                      │    │                      │       │  │
+│  │  │  ┌────────────────┐  │    │  ┌────────────────┐  │       │  │
+│  │  │  │  ECS Fargate   │  │    │  │  ECS Fargate   │  │       │  │
+│  │  │  │   (Strapi)     │  │    │  │   (Strapi)     │  │       │  │
+│  │  │  └────────────────┘  │    │  └────────────────┘  │       │  │
+│  │  │                      │    │                      │       │  │
+│  │  │  ┌────────────────┐  │    │                      │       │  │
+│  │  │  │ RDS PostgreSQL │  │    │                      │       │  │
+│  │  │  └────────────────┘  │    │                      │       │  │
+│  │  └─────────────────────┘    └─────────────────────┘       │  │
+│  └───────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Demo Deployment (Railway - Free Tier)
+
+For cost-effective demonstration:
+
+```
+GitHub Repository
+       │
+       ▼
+┌─────────────────┐      ┌─────────────────┐
+│    Railway      │      │    Railway      │
+│  (Strapi App)   │◄────►│  (PostgreSQL)   │
+└─────────────────┘      └─────────────────┘
+       │
+       ▼
+   Public URL
+```
+
+## 📁 Project Structure
+
+```
+├── terraform/                # AWS Infrastructure as Code
+│   ├── main.tf              # Main configuration
+│   ├── variables.tf         # Input variables
+│   ├── outputs.tf           # Output values
+│   ├── providers.tf         # AWS provider config
+│   ├── vpc.tf               # Network configuration
+│   ├── security-groups.tf   # Firewall rules
+│   ├── rds.tf               # PostgreSQL database
+│   ├── ecs.tf               # Container service
+│   ├── alb.tf               # Load balancer
+│   ├── iam.tf               # Permissions
+│   ├── ecr.tf               # Container registry
+│   └── terraform.tfvars. example
+│
+├── config/                   # Strapi configuration
+│   ├── admin. js
+│   ├── database.js
+│   ├── middlewares.js
+│   ├── plugins.js
+│   └── server.js
+│
+├── src/                      # Strapi source code
+├── public/                   # Static files
+├── Dockerfile               # Container definition
+├── package.json             # Dependencies
+└── README.md                # This file
+```
+
+## 🚀 Deployment Options
+
+### Option 1: Railway (Free - Used for Demo)
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run develop
-
-# Access at http://localhost:1337/admin
+# 1. Fork this repository
+# 2. Connect to Railway
+# 3. Add PostgreSQL database
+# 4. Set environment variables
+# 5. Deploy!
 ```
 
-## Deployment to Railway
+### Option 2: AWS with Terraform
 
-1. Fork this repository
-2. Create account at [railway.app](https://railway.app)
-3. New Project → Deploy from GitHub repo
-4. Add PostgreSQL database
-5. Set environment variables
-6. Deploy!
+```bash
+cd terraform
 
-## Environment Variables
+# Initialize Terraform
+terraform init
 
-Set these in Railway dashboard:
+# Preview changes
+terraform plan
 
-| Variable              | Description                       |
-| --------------------- | --------------------------------- |
-| `APP_KEYS`            | Comma-separated keys for sessions |
-| `ADMIN_JWT_SECRET`    | Secret for admin JWT tokens       |
-| `API_TOKEN_SALT`      | Salt for API tokens               |
-| `JWT_SECRET`          | Secret for API JWT tokens         |
-| `TRANSFER_TOKEN_SALT` | Salt for transfer tokens          |
+# Deploy infrastructure
+terraform apply
 
-## Project Structure
-
-```
-├── config/          # Strapi configuration
-├── src/             # Source code
-│   ├── admin/       # Admin customization
-│   └── api/         # Content-types & APIs
-├── public/          # Static files
-├── Dockerfile       # Container definition
-└── package.json     # Dependencies
+# Build and push Docker image
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ecr-url>
+docker build -t strapi .
+docker tag strapi:latest <ecr-url>:latest
+docker push <ecr-url>:latest
 ```
 
-## API Endpoints
+## 🔧 Technologies Used
 
-Once deployed, your API will be available at:
+| Technology     | Purpose                 |
+| -------------- | ----------------------- |
+| **Strapi**     | Headless CMS            |
+| **PostgreSQL** | Database                |
+| **Docker**     | Containerization        |
+| **Terraform**  | Infrastructure as Code  |
+| **AWS ECS**    | Container orchestration |
+| **AWS RDS**    | Managed database        |
+| **AWS ALB**    | Load balancing          |
+| **Railway**    | Demo deployment         |
 
-- `GET /api/[content-type]` - List all entries
-- `GET /api/[content-type]/:id` - Get single entry
-- `POST /api/[content-type]` - Create entry
-- `PUT /api/[content-type]/:id` - Update entry
-- `DELETE /api/[content-type]/:id` - Delete entry
+## 💰 Cost Comparison
 
-## Author
+| Platform         | Monthly Cost   |
+| ---------------- | -------------- |
+| Railway (Demo)   | $0 (Free tier) |
+| AWS (Production) | ~$80-120       |
 
-[Your Name]
+## 📊 Terraform Resources
 
-## License
+The Terraform configuration creates:
+
+- **VPC** with public and private subnets
+- **Internet Gateway** for public access
+- **NAT Gateway** for private subnet internet access
+- **Application Load Balancer** for traffic distribution
+- **ECS Cluster** with Fargate tasks
+- **RDS PostgreSQL** instance
+- **ECR Repository** for Docker images
+- **Security Groups** for network isolation
+- **IAM Roles** for permissions
+
+## 🔐 Security Features
+
+- Database in private subnet (not internet accessible)
+- ECS tasks in private subnet
+- Security groups restrict traffic
+- Encrypted storage (RDS, ECR)
+- No hardcoded secrets in code
+
+## 📹 Demo Video
+
+[Link to screencast video]
+
+## 👤 Author
+
+Anurag Sharma
+
+## 📄 License
 
 MIT

@@ -1,0 +1,21 @@
+# =============================================================================
+# TERRAFORM VARIABLES EXAMPLE
+# =============================================================================
+# Copy this to terraform.tfvars and fill in your values. 
+# NEVER commit terraform.tfvars to git (contains secrets!)
+
+# General
+project_name = "strapi-cms"
+environment  = "dev"
+aws_region   = "us-east-1"
+
+# Database (CHANGE THESE!)
+db_name     = "strapidb"
+db_username = "strapiuser"
+db_password = "YourSecurePassword123!"
+
+# Strapi Secrets (generate with: openssl rand -base64 32)
+strapi_app_keys         = "key1,key2,key3,key4"
+strapi_admin_jwt_secret = "your-admin-jwt-secret"
+strapi_jwt_secret       = "your-jwt-secret"
+strapi_api_token_salt   = "your-api-token-salt"
