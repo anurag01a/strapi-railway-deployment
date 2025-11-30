@@ -76,5 +76,3 @@ Once deployed, your API will be available at:
 ## License
 
 MIT
-
-# Run these commands to generate secrets
