@@ -4,11 +4,11 @@ A headless CMS deployed on the cloud using Infrastructure as Code principles.
 
 ## 🌐 Live Demo
 
-| Resource          | URL                                |
-| ----------------- | ---------------------------------- |
-| **Strapi Server** | https://your-url. railway.app      |
-| **Admin Panel**   | https://your-url.railway.app/admin |
-| **Database**      | PostgreSQL (Railway)               |
+| Resource          | URL                                                               |
+| ----------------- | ----------------------------------------------------------------- |
+| **Strapi Server** | https://strapi-railway-deployment-production.up.railway.app/      |
+| **Admin Panel**   | https://strapi-railway-deployment-production.up.railway.app/admin |
+| **Database**      | PostgreSQL (Railway)                                              |
 
 ## 🏗️ Architecture
 
