@@ -173,7 +173,7 @@ The Terraform configuration creates:
 
 ## 📹 Demo Video
 
-[Link to screencast video]
+- [Link to screencast video](https://youtu.be/a8_lfgFf4rQ)
 
 ## 👤 Author
 
